@@ -21,7 +21,24 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Grabber reporting for duty for %s"), *(GetOwner()->GetActorLabel()))
+	UE_LOG(
+		LogTemp,
+		Warning,
+		TEXT("Grabber reporting for duty for %s"),
+		*(GetOwner()->GetActorLabel())
+	);
+
+	// Check for physics handle component
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle)
+	{
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Unable to FInd Physics Handle for %s"),
+		*(GetOwner()->GetActorLabel()))
+	}
 }
 
 // Called every frame
