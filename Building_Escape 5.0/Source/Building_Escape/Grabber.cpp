@@ -21,24 +21,37 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(
-		LogTemp,
-		Warning,
-		TEXT("Grabber reporting for duty for %s"),
-		*(GetOwner()->GetActorLabel())
-	);
-
 	// Check for physics handle component
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (PhysicsHandle)
 	{
-
+		UE_LOG(LogTemp, Warning, TEXT("Found Physics Handle for %s"),
+		*(GetOwner()->GetActorLabel()))
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Unable to FInd Physics Handle for %s"),
+		UE_LOG(LogTemp, Error, TEXT("Unable to Find Physics Handle for %s"),
 		*(GetOwner()->GetActorLabel()))
 	}
+
+	// Check for input component
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Found Input component for %s"),
+		*(GetOwner()->GetActorLabel()))
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+	}
+	// else
+	// {
+	// 	UE_LOG(LogTemp, Error, TEXT("Unable to Find Input component for %s"),
+	// 	*(GetOwner()->GetActorLabel()))
+	// }
+}
+
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabber press"));
 }
 
 // Called every frame
@@ -69,6 +82,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// Ray-cast out to certain distance (Reach)
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
+
 	GetWorld()->LineTraceSingleByObjectType(
 		OUT Hit,
 		ViewPointLocation,
