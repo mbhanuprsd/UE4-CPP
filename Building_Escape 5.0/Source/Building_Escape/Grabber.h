@@ -26,7 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	float Reach = 100.f;
+	float Reach = 200.f;
 	
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* InputComponent = nullptr;
@@ -38,4 +38,10 @@ private:
 
 	//Return the first actor within reach  with physics body
 	FHitResult GetFirstPhysicsBodyInReach() const;
+
+	//Return th eline trace end
+	FVector GetPlayersReach() const;
+
+	//Get players position in world
+	FVector GetPlayersWorldPos() const;
 };
