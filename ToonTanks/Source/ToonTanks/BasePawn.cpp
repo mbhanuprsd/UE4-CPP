@@ -33,12 +33,10 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 
 void ABasePawn::Fire()
 {
-	FActorSpawnParameters SpawnParameters = FActorSpawnParameters();
-	SpawnParameters.Owner = this;
-	GetWorld()->SpawnActor<AProjectile>(
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileClass,
 		ProjectileSpawnPoint->GetComponentLocation(),
-		ProjectileSpawnPoint->GetComponentRotation(),
-		SpawnParameters
+		ProjectileSpawnPoint->GetComponentRotation()
 		);
+	Projectile->SetOwner(this);
 }
