@@ -2,6 +2,7 @@
 
 
 #include "BasePawn.h"
+#include "Projectile.h"
 #include "DrawDebugHelpers.h"
 #include "Components/CapsuleComponent.h"
 
@@ -32,13 +33,12 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 
 void ABasePawn::Fire()
 {
-	DrawDebugSphere(
-		GetWorld(),
+	FActorSpawnParameters SpawnParameters = FActorSpawnParameters();
+	SpawnParameters.Owner = this;
+	GetWorld()->SpawnActor<AProjectile>(
+		ProjectileClass,
 		ProjectileSpawnPoint->GetComponentLocation(),
-		25.f,
-		12,
-		FColor::Red,
-		false,
-		3.f
-	);
+		ProjectileSpawnPoint->GetComponentRotation(),
+		SpawnParameters
+		);
 }
