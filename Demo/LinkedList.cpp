@@ -36,18 +36,26 @@ void ReversePrint(struct Node* p)
     cout<<p->data<<endl;
 }
 
-struct Node* IterativeReverseLinkedList(struct Node* head)
+struct Node* IterativeReverse(struct Node* head)
 {
-    Node* left = NULL; Node* current = head; Node* right = NULL;
+    Node* prev = NULL; Node* current = head; Node* next = NULL;
     while(current != NULL)
     {
-       right = current->next;
-       current->next = left;
-       left = current;
-       current = right;
+       next = current->next;
+       current->next = prev;
+       prev = current;
+       current = next;
     }
-    current = left;
-    return current;
+    return prev;
+}
+
+struct Node* RecursiveReverse(struct Node* p)
+{
+    if (p== NULL)
+    {
+        return p;
+    }
+    RecursiveReverse(p->next);
 }
 
 int main()
@@ -59,7 +67,7 @@ int main()
     head = Insert(head, 7);
     
     Print(head);
-    head = IterativeReverseLinkedList(head);
+    head = IterativeReverse(head);
     Print(head);
     
     return 0;
