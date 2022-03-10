@@ -1,11 +1,3 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <iostream>
 
 using namespace std;
@@ -40,8 +32,22 @@ void Print(struct Node* p)
 void ReversePrint(struct Node* p)
 {
     if (p == NULL) return;
-    Print(p->next);
+    ReversePrint(p->next);
     cout<<p->data<<endl;
+}
+
+struct Node* IterativeReverseLinkedList(struct Node* head)
+{
+    Node* left = NULL; Node* current = head; Node* right = NULL;
+    while(current != NULL)
+    {
+       right = current->next;
+       current->next = left;
+       left = current;
+       current = right;
+    }
+    current = left;
+    return current;
 }
 
 int main()
@@ -52,6 +58,8 @@ int main()
     head = Insert(head, 5);
     head = Insert(head, 7);
     
+    Print(head);
+    head = IterativeReverseLinkedList(head);
     Print(head);
     
     return 0;
