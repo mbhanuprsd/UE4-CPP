@@ -51,11 +51,14 @@ struct Node* IterativeReverse(struct Node* head)
 
 struct Node* RecursiveReverse(struct Node* p)
 {
-    if (p== NULL)
+    if (p== NULL || p->next == NULL)
     {
         return p;
     }
-    RecursiveReverse(p->next);
+    Node* reversedHead = RecursiveReverse(p->next);
+    p->next->next = p;
+    p->next = NULL;
+    return reversedHead;
 }
 
 int main()
@@ -67,7 +70,7 @@ int main()
     head = Insert(head, 7);
     
     Print(head);
-    head = IterativeReverse(head);
+    head = RecursiveReverse(head);
     Print(head);
     
     return 0;
